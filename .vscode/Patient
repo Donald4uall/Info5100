@@ -1,0 +1,151 @@
+public class Patient {
+    private String firstName;
+    private String lastName;
+    private int age;
+    private String email;
+    private String message;
+    private String patientType;
+    private String gender;
+    private ImageIcon photo;
+
+    // Constructor
+    public Patient(String firstName, String lastName, int age, String email, String message, String patientType, String gender, ImageIcon photo) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.email = email;
+        this.message = message;
+        this.patientType = patientType;
+        this.gender = gender;
+        this.photo = photo;
+    }
+
+    // Getters and Setters with validation methods
+    public String getFirstName() { return firstName; }
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+
+    public String getLastName() { return lastName; }
+    public void setLastName(String lastName) { this.lastName = lastName; }
+
+    public int getAge() { return age; }
+    public void setAge(int age) { this.age = age; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public String getMessage() { return message; }
+    public void setMessage(String message) { this.message = message; }
+
+    public String getPatientType() { return patientType; }
+    public void setPatientType(String patientType) { this.patientType = patientType; }
+
+    public String getGender() { return gender; }
+    public void setGender(String gender) { this.gender = gender; }
+
+    public ImageIcon getPhoto() { return photo; }
+    public void setPhoto(ImageIcon photo) { this.photo = photo; }
+
+    // Validation methods (e.g., for email, age, etc.)
+}
+
+
+private JPanel createRegistrationForm() {
+    JPanel formPanel = new JPanel(new GridLayout(8, 2));
+    
+    // First Name
+    formPanel.add(new JLabel("First Name:"));
+    JTextField firstNameField = new JTextField();
+    formPanel.add(firstNameField);
+
+    // Last Name
+    formPanel.add(new JLabel("Last Name:"));
+    JTextField lastNameField = new JTextField();
+    formPanel.add(lastNameField);
+
+    // Age
+    formPanel.add(new JLabel("Age:"));
+    JTextField ageField = new JTextField();
+    formPanel.add(ageField);
+
+    // Email
+    formPanel.add(new JLabel("Email:"));
+    JTextField emailField = new JTextField();
+    formPanel.add(emailField);
+
+    // Message
+    formPanel.add(new JLabel("Message:"));
+    JTextArea messageArea = new JTextArea();
+    formPanel.add(new JScrollPane(messageArea));
+
+    // Patient Type ComboBox
+    formPanel.add(new JLabel("Patient Type:"));
+    JComboBox<String> patientTypeCombo = new JComboBox<>(new String[]{"Inpatient", "Outpatient"});
+    formPanel.add(patientTypeCombo);
+
+    // Gender RadioButtons
+    formPanel.add(new JLabel("Gender:"));
+    JRadioButton maleButton = new JRadioButton("Male");
+    JRadioButton femaleButton = new JRadioButton("Female");
+    ButtonGroup genderGroup = new ButtonGroup();
+    genderGroup.add(maleButton);
+    genderGroup.add(femaleButton);
+    JPanel genderPanel = new JPanel();
+    genderPanel.add(maleButton);
+    genderPanel.add(femaleButton);
+    formPanel.add(genderPanel);
+
+    // Photo upload button
+    formPanel.add(new JLabel("Photo:"));
+    JButton uploadButton = new JButton("Upload Photo");
+    formPanel.add(uploadButton);
+
+    return formPanel;
+}
+
+
+
+CardLayout cardLayout = new CardLayout();
+JPanel mainPanel = new JPanel(cardLayout);
+
+JPanel registrationPanel = createRegistrationForm();
+JPanel detailsPanel = createDetailsView();  // A method to display patient details
+
+mainPanel.add(registrationPanel, "Registration");
+mainPanel.add(detailsPanel, "Details");
+
+// Switch between panels
+JButton submitButton = new JButton("Submit");
+submitButton.addActionListener(e -> {
+    // Capture form data and display it in detailsPanel
+    cardLayout.show(mainPanel, "Details");
+});
+
+registrationPanel.add(submitButton);
+
+
+
+
+JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+splitPane.setLeftComponent(createNavigationPanel()); // optional for additional navigation
+splitPane.setRightComponent(mainPanel);
+
+
+
+
+
+private boolean validateForm() {
+    // Implement validation for each field, e.g.,
+    if (firstNameField.getText().trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "First name is required!");
+        return false;
+    }
+    // Continue validation for other fields...
+    return true;
+}
+
+
+
+import com.toedter.calendar.JDateChooser;
+
+JDateChooser dateChooser = new JDateChooser();
+formPanel.add(dateChooser);
